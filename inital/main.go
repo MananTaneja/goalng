@@ -22,7 +22,6 @@ func handleSSE() http.HandlerFunc {
 		messageChan = make(chan string)
 
 		// close the channel after exit the function
-
 		defer func() {
 			close(messageChan)
 			messageChan = nil
