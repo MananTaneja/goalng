@@ -37,7 +37,7 @@ func handleSSE() http.HandlerFunc {
 
 			// message will be received here and printed
 			case message := <-messageChan:
-				fmt.Fprintf(w, "%s\n", message)
+				fmt.Fprintf(w, "data: %s\n\n", message)
 				flusher.Flush()
 
 			// connection is closed and then defer will be executed
