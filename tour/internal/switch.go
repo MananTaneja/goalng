@@ -1,11 +1,11 @@
-package main
+package tourPackage
 
 import (
 	"fmt"
 	"time"
 )
 
-func main() {
+func SwitchCase() {
 	fmt.Println("When's Saturday?")
 	today := time.Now().Weekday()
 	switch time.Saturday {
