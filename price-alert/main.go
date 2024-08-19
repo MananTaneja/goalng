@@ -8,12 +8,20 @@ import (
 	priceAlert "priceAlert/internal"
 )
 
+type RequestBody struct {
+	PageUrl string `json:"pageUrl"`
+}
+
+type Response struct {
+	Price string `json:"price"`
+}
+
 func amazonHandler() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("inside the amazon api handler")
 
-		var body priceAlert.RequestBody
+		var body RequestBody
 
 		err := json.NewDecoder(r.Body).Decode(&body)
 
@@ -23,9 +31,21 @@ func amazonHandler() http.HandlerFunc {
 			return
 		}
 
-		fmt.Println(body)
+		defer r.Body.Close()
 
-		// priceAlert.Amazon(body.pageUrl)
+		price, err := priceAlert.Amazon(body.PageUrl)
+
+		if err != nil {
+			fmt.Println("Error while parsing price from the given url")
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+
+		response := Response{
+			Price: price,
+		}
+
+		json.NewEncoder(w).Encode(response)
 
 	}
 
