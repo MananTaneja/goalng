@@ -51,10 +51,42 @@ func amazonHandler() http.HandlerFunc {
 
 }
 
+// func flipkartHandler() http.HandlerFunc {
+// 	return func(w http.ResponseWriter, r *http.Request) {
+// 		fmt.Println("Flipkart api handler")
+
+// 		var body RequestBody
+
+// 		err := json.NewDecoder(r.Body).Decode(&body)
+
+// 		if err != nil {
+// 			log.Fatal("Unable to decode request body")
+// 		}
+
+// 		defer r.Body.Close()
+
+// 		price := priceAlert.FlipkartFetch(body.PageUrl)
+
+// 		// if err != nil {
+// 		// 	log.Fatal("Error unable to parse price")
+// 		// }
+
+// 		w.Header().Set("Content-Type", "application/json")
+
+// 		response := Response{
+// 			Price: price,
+// 		}
+
+// 		json.NewDecoder(w).Encode(response)
+// 	}
+// }
+
 func main() {
 	fmt.Println("Running server on 8080")
 
 	http.HandleFunc("/api/v1/amazon", amazonHandler())
+
+	// http.HandleFunc("api/v1/flipkart", flipkartHandler())
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 
